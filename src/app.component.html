@@ -1,0 +1,45 @@
+
+<div class="flex h-screen bg-gray-100">
+  <!-- Sidebar -->
+  <aside 
+    class="flex flex-col bg-white shadow-lg transition-all duration-300 ease-in-out"
+    [class.w-64]="isSidebarOpen()"
+    [class.w-20]="!isSidebarOpen()">
+    
+    <div class="flex items-center justify-between h-16 px-4 border-b">
+      <div class="flex items-center gap-2" [class.hidden]="!isSidebarOpen()">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Im0xMjQuNjQ5LjYyNS0xMjQuNjQ5IDQ0LjE1NiAwIDI0LjU5NiAyMC4xNTYgMTI1LjQxIDEwNC40OTMtMTk0LjIzNSIvPgogICAgPHBhdGggZmlsbD0iI0MzMDAyRiIgZD0ibTEyNS4zNDYuNjI1IDEyNC42NDkgNDQuMTU2IDAgMjQuNTk2LTIwLjE1NiAxMjUuNDEtMTA0LjQ5My0xOTQuMjM1Ii8+CiAgICA8cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNMTI1IDI0MC43NTZsLTIwLjE1Ni0xMjUuNDA2aDQwLjMxMmwtMjAuMTU2IDEyNS40MDYiLz4KICA8L3N2Zz4K" alt="Angular Logo" class="h-8 w-8">
+        <span class="text-xl font-bold text-gray-800">Components</span>
+      </div>
+      <button (click)="toggleSidebar()" class="p-2 rounded-full hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-primary-500">
+        <svg [class.rotate-180]="!isSidebarOpen()" class="w-6 h-6 text-gray-600 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+      </button>
+    </div>
+
+    <nav class="flex-1 mt-4">
+      <ul>
+        @for (link of navLinks; track link.path) {
+          <li>
+            <a 
+              [routerLink]="link.path" 
+              routerLinkActive="bg-primary-100 text-primary-700 border-l-4 border-primary-500"
+              class="flex items-center gap-4 px-6 py-3 text-gray-600 hover:bg-gray-100 transition-colors"
+              [title]="link.label">
+              <span class="text-2xl">{{ link.icon }}</span>
+              <span class="font-medium" [class.hidden]="!isSidebarOpen()">{{ link.label }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex flex-col overflow-hidden">
+    <div class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+      <div class="container mx-auto px-6 py-8">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </main>
+</div>

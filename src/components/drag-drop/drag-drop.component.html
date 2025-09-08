@@ -1,0 +1,101 @@
+
+<div class="max-w-6xl mx-auto">
+  <div class="text-center mb-10">
+    <h1 class="text-4xl font-extrabold text-gray-800">Drag & Drop Pantry</h1>
+    <p class="text-lg text-gray-500 mt-2">Organize your items into the correct baskets!</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- Source Lists -->
+    <div class="space-y-8">
+      <!-- Fruits -->
+      <div class="bg-white p-6 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b pb-2">Fruits</h2>
+        <div cdkDropList
+             id="fruitsList"
+             [cdkDropListData]="fruits()"
+             [cdkDropListConnectedTo]="['fruitBasketList']"
+             (cdkDropListDropped)="drop($event)"
+             class="min-h-[200px] bg-gray-50 rounded-lg p-4 space-y-3">
+          @for (fruit of fruits(); track fruit.name) {
+            <div cdkDrag [cdkDragData]="fruit" class="flex items-center p-3 bg-white rounded-lg shadow-md cursor-grab active:cursor-grabbing transition-shadow hover:shadow-xl">
+              <span class="text-2xl mr-4">{{ fruit.emoji }}</span>
+              <span class="font-medium text-gray-800">{{ fruit.name }}</span>
+            </div>
+          }
+          @if (fruits().length === 0) {
+            <div class="flex items-center justify-center h-full text-gray-400">Empty</div>
+          }
+        </div>
+      </div>
+      
+      <!-- Vegetables -->
+      <div class="bg-white p-6 rounded-2xl shadow-lg">
+        <h2 class="text-2xl font-bold text-gray-700 mb-4 border-b pb-2">Vegetables</h2>
+        <div cdkDropList
+             id="vegetablesList"
+             [cdkDropListData]="vegetables()"
+             [cdkDropListConnectedTo]="['veggieBasketList']"
+             (cdkDropListDropped)="drop($event)"
+             class="min-h-[200px] bg-gray-50 rounded-lg p-4 space-y-3">
+          @for (veg of vegetables(); track veg.name) {
+            <div cdkDrag [cdkDragData]="veg" class="flex items-center p-3 bg-white rounded-lg shadow-md cursor-grab active:cursor-grabbing transition-shadow hover:shadow-xl">
+              <span class="text-2xl mr-4">{{ veg.emoji }}</span>
+              <span class="font-medium text-gray-800">{{ veg.name }}</span>
+            </div>
+          }
+          @if (vegetables().length === 0) {
+            <div class="flex items-center justify-center h-full text-gray-400">Empty</div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Destination Lists (Baskets) -->
+    <div class="space-y-8">
+      <!-- Fruit Basket -->
+      <div class="bg-green-50 p-6 rounded-2xl shadow-lg border-2 border-dashed border-green-300">
+        <h2 class="text-2xl font-bold text-green-800 mb-4 border-b border-green-200 pb-2">🍎 Fruit Basket</h2>
+        <div cdkDropList
+             id="fruitBasketList"
+             [cdkDropListData]="fruitBasket()"
+             [cdkDropListConnectedTo]="['fruitsList']"
+             [cdkDropListEnterPredicate]="isFruit"
+             (cdkDropListDropped)="drop($event)"
+             class="min-h-[200px] p-4 space-y-3 rounded-lg cdk-drop-list-receiving:bg-green-100 transition-colors">
+          @for (fruit of fruitBasket(); track fruit.name) {
+            <div cdkDrag [cdkDragData]="fruit" class="flex items-center p-3 bg-white rounded-lg shadow-md cursor-grab active:cursor-grabbing transition-shadow hover:shadow-xl">
+              <span class="text-2xl mr-4">{{ fruit.emoji }}</span>
+              <span class="font-medium text-gray-800">{{ fruit.name }}</span>
+            </div>
+          }
+          @if (fruitBasket().length === 0) {
+            <div class="flex items-center justify-center h-full text-green-600 opacity-70">Drop fruits here</div>
+          }
+        </div>
+      </div>
+      
+      <!-- Veggie Basket -->
+      <div class="bg-orange-50 p-6 rounded-2xl shadow-lg border-2 border-dashed border-orange-300">
+        <h2 class="text-2xl font-bold text-orange-800 mb-4 border-b border-orange-200 pb-2">🥕 Veggie Basket</h2>
+        <div cdkDropList
+             id="veggieBasketList"
+             [cdkDropListData]="veggieBasket()"
+             [cdkDropListConnectedTo]="['vegetablesList']"
+             [cdkDropListEnterPredicate]="isVegetable"
+             (cdkDropListDropped)="drop($event)"
+             class="min-h-[200px] p-4 space-y-3 rounded-lg cdk-drop-list-receiving:bg-orange-100 transition-colors">
+          @for (veg of veggieBasket(); track veg.name) {
+            <div cdkDrag [cdkDragData]="veg" class="flex items-center p-3 bg-white rounded-lg shadow-md cursor-grab active:cursor-grabbing transition-shadow hover:shadow-xl">
+              <span class="text-2xl mr-4">{{ veg.emoji }}</span>
+              <span class="font-medium text-gray-800">{{ veg.name }}</span>
+            </div>
+          }
+          @if (veggieBasket().length === 0) {
+            <div class="flex items-center justify-center h-full text-orange-600 opacity-70">Drop vegetables here</div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

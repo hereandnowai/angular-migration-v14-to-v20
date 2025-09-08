@@ -1,0 +1,62 @@
+
+<div class="max-w-4xl mx-auto text-center">
+  <div class="bg-white p-8 rounded-2xl shadow-lg">
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-800">Simple Popover Demo</h1>
+      <p class="text-gray-500 mt-2">A lightweight, Tailwind-styled popover component.</p>
+    </div>
+
+    <div class="flex justify-center items-center space-x-4 h-64 bg-gray-50 rounded-lg p-8 border">
+      <!-- Popover 1: Profile -->
+      <div class="relative">
+        <button (click)="togglePopover(isProfilePopoverOpen)" class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition">
+          Show Profile
+        </button>
+        <app-simple-popover [isOpen]="isProfilePopoverOpen()">
+          <div class="p-4">
+            <div class="flex items-center space-x-3">
+              <img class="h-12 w-12 rounded-full" src="https://picsum.photos/id/237/100/100" alt="User Avatar">
+              <div>
+                <p class="font-semibold text-gray-800">John Doe</p>
+                <p class="text-sm text-gray-500">Software Engineer</p>
+              </div>
+            </div>
+            <button class="mt-4 w-full text-sm text-center bg-gray-100 hover:bg-gray-200 p-2 rounded-md">View Profile</button>
+          </div>
+        </app-simple-popover>
+      </div>
+
+      <!-- Popover 2: Settings -->
+      <div class="relative">
+        <button (click)="togglePopover(isSettingsPopoverOpen)" class="px-6 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition">
+          Settings
+        </button>
+        <app-simple-popover [isOpen]="isSettingsPopoverOpen()" position="right">
+          <ul class="p-2 space-y-1">
+            <li class="p-2 hover:bg-gray-100 rounded-md cursor-pointer text-sm">Account</li>
+            <li class="p-2 hover:bg-gray-100 rounded-md cursor-pointer text-sm">Billing</li>
+            <li class="p-2 hover:bg-gray-100 rounded-md cursor-pointer text-sm">Security</li>
+            <li class="p-2 text-red-600 hover:bg-red-50 rounded-md cursor-pointer text-sm">Log Out</li>
+          </ul>
+        </app-simple-popover>
+      </div>
+      
+      <!-- Popover 3: Notifications -->
+      <div class="relative">
+        <button (click)="togglePopover(isNotificationsPopoverOpen)" class="px-6 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition">
+          Notifications
+        </button>
+        <app-simple-popover [isOpen]="isNotificationsPopoverOpen()" position="bottom">
+           <div class="p-4 w-64">
+            <p class="font-semibold mb-2">Notifications</p>
+            <div class="text-sm text-gray-600 space-y-2">
+                <p><strong>New message</strong> from Jane Smith.</p>
+                <p>Your subscription is about to expire.</p>
+                <p>Project "Apollo" has a new update.</p>
+            </div>
+           </div>
+        </app-simple-popover>
+      </div>
+    </div>
+  </div>
+</div>

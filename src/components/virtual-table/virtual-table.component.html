@@ -1,0 +1,66 @@
+<div class="bg-white p-6 rounded-2xl shadow-lg">
+  <div class="mb-6 text-center">
+    <h1 class="text-3xl font-bold text-gray-800">Virtual Scroll Table</h1>
+    <p class="text-gray-500 mt-2">Displaying {{ filteredEmployees().length }} of {{ allEmployees().length }} records efficiently.</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 p-4 bg-gray-50 rounded-lg border">
+    <input type="text" [(ngModel)]="searchText" placeholder="🔍 Search by name or email..."
+           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 transition">
+
+    <select [(ngModel)]="selectedDepartment"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 transition bg-white">
+      @for (dept of departments; track dept) {
+        <option [value]="dept">{{ dept }}</option>
+      }
+    </select>
+
+    <select [(ngModel)]="selectedStatus"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 transition bg-white">
+      @for (status of statuses; track status) {
+        <option [value]="status">{{ status }}</option>
+      }
+    </select>
+  </div>
+
+  <!-- Table -->
+  <div class="overflow-hidden rounded-lg border border-gray-200">
+    <!-- Header -->
+    <div class="flex bg-gray-100 font-semibold text-left text-sm text-gray-600">
+      <div class="p-3 w-20">ID</div>
+      <div class="p-3 flex-1">Name</div>
+      <div class="p-3 flex-1">Email</div>
+      <div class="p-3 w-40">Department</div>
+      <div class="p-3 w-32">Status</div>
+      <div class="p-3 w-32 text-right">Salary</div>
+    </div>
+
+    <!-- Virtual Scroll Viewport -->
+    @if (filteredEmployees().length > 0) {
+      <cdk-virtual-scroll-viewport itemSize="57" class="h-[600px] w-full">
+        <div *cdkVirtualFor="let employee of filteredEmployees(); trackBy: trackById"
+            class="flex items-center border-b border-gray-200 text-sm text-gray-700 hover:bg-gray-50 transition h-[57px]">
+            <div class="p-3 w-20 font-mono text-gray-500">{{ employee.id }}</div>
+            <div class="p-3 flex-1 font-medium text-gray-900">{{ employee.name }}</div>
+            <div class="p-3 flex-1">{{ employee.email }}</div>
+            <div class="p-3 w-40">
+              <span class="px-2 py-1 text-xs font-semibold rounded-full" [class]="getDepartmentClass(employee.department)">
+                {{ employee.department }}
+              </span>
+            </div>
+            <div class="p-3 w-32">
+              <span class="px-2 py-1 text-xs font-semibold rounded-full" [class]="getStatusClass(employee.status)">
+                {{ employee.status }}
+              </span>
+            </div>
+            <div class="p-3 w-32 text-right font-medium">{{ formatSalary(employee.salary) }}</div>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    } @else {
+      <div class="flex items-center justify-center h-[600px] text-gray-500">
+        No records found.
+      </div>
+    }
+  </div>
+</div>

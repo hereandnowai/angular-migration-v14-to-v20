@@ -1,0 +1,7 @@
+@if (isOpen()) {
+  <div 
+    [class]="combinedClasses()"
+    role="dialog">
+    <ng-content></ng-content>
+  </div>
+}

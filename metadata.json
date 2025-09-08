@@ -1,0 +1,5 @@
+{
+  "name": "Angular Component Showcase",
+  "description": "A modern Angular 20 application demonstrating several advanced UI components including reactive forms, virtual scrolling, drag-and-drop, and popovers, all styled with Tailwind CSS.",
+  "requestFramePermissions": []
+}
